@@ -170,7 +170,30 @@ initPage('index');
 buildCountries('countryGrid');
 
 var currentTab = 'all';
+async function fetchNews(category) {
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .select('*')
+      .eq('is_draft', false)
+      .order('created_at', { ascending: false });
 
+    if (error) throw error;
+
+    // If a category is selected (and it's not 'all'), filter the results
+    if (category && category !== 'all') {
+      return data.filter(article => 
+        article.category && article.category.toLowerCase() === category.toLowerCase()
+      );
+    }
+
+    return data;
+  } catch (err) {
+    console.error("Database Fetch Error:", err);
+    throw err; // This sends the error to your loadNews 'catch' block
+  }
+}
+  
 async function loadNews(tab) {
   showSkeleton('newsGrid', 4);
   document.getElementById('lastUpdated').textContent = '';
