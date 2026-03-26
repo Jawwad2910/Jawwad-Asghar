@@ -6,7 +6,8 @@
 <title>Meridian Post — World News, Geopolitics & Analysis</title>
 <meta name="description" content="Meridian Post covers world politics, geopolitics, markets and technology with sharp analysis. Founded by J. Asghar."/>
 <link rel="stylesheet" href="style.css"/>
-</head>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
 <body>
 
 <div id="pb"></div>
@@ -322,5 +323,56 @@ loadNews('all');
 loadPublished();
 buildMostRead();
 </script>
+    ... (rest of your website code) ...
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseUrl = 'https://your-id.supabase.co';
+    const supabaseAnonKey = 'your-key';
+    const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+    async function fetchNews(category) {
+       // ... the function code I gave you ...
+    }
+  </script>
+
+</body>
+</html> ```
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const supabaseUrl = 'https://fioilphrakfblmvcseef.supabase.co';
+  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpb2lscGhyYWtmYmxtdmNzZWVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0MTE1OTUsImV4cCI6MjA4OTk4NzU5NX0._8oYT35T6zaaf25DPEvg4pTT0cBqTfhsgGQ2bvOSzlM';
+  const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+  async function fetchNews(category) {
+    try {
+      const { data, error } = await supabase
+        .from('articles')
+        .select('*')
+        .eq('is_draft', false)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      if (category && category !== 'all') {
+        return data.filter(article => 
+          article.category && article.category.toLowerCase() === category.toLowerCase()
+        );
+      }
+      return data;
+    } catch (err) {
+      console.error("Database Error:", err);
+      return [];
+    }
+  }
+
+  window.addEventListener('load', () => {
+    if (typeof loadNews === 'function') {
+      loadNews('all');
+    }
+  });
+</script>
+
+
 </body>
 </html>
