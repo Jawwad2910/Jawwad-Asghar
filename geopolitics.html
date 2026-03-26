@@ -1,75 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Geopolitics — Meridian Post</title>
-  <meta name="description" content="Latest geopolitics news — power shifts, conflicts, alliances and global order. Meridian Post."/>
-  <link rel="stylesheet" href="style.css"/>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Geopolitics — Meridian Post</title>
+<link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-<div id="navContainer"></div>
-<div id="tickerContainer"></div>
-
-<div class="page-hero" style="background:linear-gradient(to bottom, rgba(224,90,43,0.07), transparent);">
+<div id="pb"></div><div id="nv"></div><div id="al"></div><div id="tk"></div><div id="ck"></div>
+<div class="breadcrumb"><a href="index.html">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Geopolitics</span></div>
+<div class="page-hero" style="background:linear-gradient(to bottom,rgba(224,90,43,0.07),transparent)">
   <div class="page-hero-label">Section</div>
   <h1>🌍 Geopolitics</h1>
-  <p>Power shifts, conflicts, sanctions, alliances and the forces reshaping the international order. No noise, just analysis.</p>
+  <p>Power shifts, conflicts, sanctions and the forces reshaping the international order.</p>
 </div>
-
 <div class="layout">
   <div>
-    <div class="sec-head">
-      <span class="sec-label">Latest Geopolitics</span>
-      <div class="sec-line"></div>
-    </div>
+    <div class="sec-head"><span class="sec-label">Latest Geopolitics</span><div class="sec-line"></div><span style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted)" id="upd"></span></div>
     <div id="newsGrid"></div>
   </div>
   <aside class="sidebar">
-    <div class="widget">
-      <div class="widget-title">📊 Markets</div>
-      <div id="marketWidget"></div>
-    </div>
-    <div class="widget">
-      <div class="widget-title">📂 Other Sections</div>
-      <div class="section-links">
-        <a href="world-politics.html">🏛️ World Politics <span>→</span></a>
-        <a href="markets.html">📈 Markets <span>→</span></a>
-        <a href="technology.html">💻 Technology <span>→</span></a>
-        <a href="index.html">🌐 Home <span>→</span></a>
-      </div>
-    </div>
-    <div class="widget">
-      <div class="widget-title">✍️ Editor's Note</div>
-      <div class="quote-box">
-        <div class="quote-text">"Every geopolitical conflict has an economic root. Follow the money, find the truth."</div>
-        <div class="quote-sig">— J. Asghar, Founder &amp; Editor</div>
-      </div>
-    </div>
+    <div class="widget widget-glass"><div class="widget-title">📊 Markets</div><div id="marketWidget"></div></div>
+    <div class="widget"><div class="widget-title">💱 Currency</div><div id="converterWidget"></div></div>
+    <div class="widget"><div class="widget-title">📂 Other Sections</div><div class="sec-links"><a href="world-politics.html" class="sec-link">🏛️ World Politics <span>→</span></a><a href="markets.html" class="sec-link">📈 Markets <span>→</span></a><a href="technology.html" class="sec-link">💻 Technology <span>→</span></a></div></div>
+    <div class="widget"><div class="widget-title">✍️ Editor's Note</div><div class="quote-box"><div class="quote-text">"Every geopolitical conflict has an economic root. Follow the money, find the truth."</div><div class="quote-sig">— J. Asghar, Editor</div></div></div>
   </aside>
 </div>
-
-<div id="footerContainer"></div>
-<div id="pwdModalContainer"></div>
-<div id="editorModalContainer"></div>
-<div id="toastContainer"></div>
-
+<div id="ft"></div><div id="pw"></div><div id="ed"></div><div id="to"></div><div id="bt"></div>
 <script src="app.js"></script>
 <script>
-  document.getElementById('navContainer').innerHTML = buildNavHTML('geopolitics');
-  document.getElementById('tickerContainer').innerHTML = buildTickerHTML();
-  document.getElementById('footerContainer').innerHTML = buildFooterHTML();
-  document.getElementById('pwdModalContainer').innerHTML = buildPasswordModalHTML();
-  document.getElementById('editorModalContainer').innerHTML = buildEditorModalHTML();
-  document.getElementById('toastContainer').innerHTML = buildToastHTML();
-  initPage('geopolitics');
-
-  async function load() {
-    showSkeletonCards('newsGrid', 6);
-    const articles = await fetchNews('geopolitics');
-    renderNewsCards(articles, 'geopolitics', 'newsGrid');
-  }
-  load();
+document.getElementById('pb').innerHTML=progressHTML();document.getElementById('nv').innerHTML=navHTML('geopolitics');document.getElementById('al').innerHTML=alertHTML();document.getElementById('tk').innerHTML=tickerHTML();document.getElementById('ck').innerHTML=clockHTML();document.getElementById('ft').innerHTML=footerHTML();document.getElementById('pw').innerHTML=pwdModalHTML();document.getElementById('ed').innerHTML=editorModalHTML();document.getElementById('to').innerHTML=toastHTML();document.getElementById('bt').innerHTML=backTopHTML();initPage('geopolitics');
+async function load(){showSkeleton('newsGrid',6);var a=await fetchNews('geopolitics');renderCards(a,'geopolitics','newsGrid');var u=document.getElementById('upd');if(u)u.textContent='Updated '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});}load();
 </script>
-</body>
-</html>
+</body></html>

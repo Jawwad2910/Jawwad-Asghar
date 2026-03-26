@@ -1,102 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Markets — Meridian Post</title>
-  <meta name="description" content="Stock markets, commodities, currencies and global finance news. Meridian Post."/>
-  <link rel="stylesheet" href="style.css"/>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Markets — Meridian Post</title>
+<link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-<div id="navContainer"></div>
-<div id="tickerContainer"></div>
-
-<div class="page-hero" style="background:linear-gradient(to bottom, rgba(76,175,125,0.07), transparent);">
+<div id="pb"></div><div id="nv"></div><div id="al"></div><div id="tk"></div><div id="ck"></div>
+<div class="breadcrumb"><a href="index.html">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Markets</span></div>
+<div class="page-hero" style="background:linear-gradient(to bottom,rgba(62,207,142,0.07),transparent)">
   <div class="page-hero-label">Section</div>
   <h1>📈 Markets</h1>
   <p>Stocks, commodities, currencies and the economic forces driving global financial markets.</p>
 </div>
-
-<!-- MARKET CARDS -->
-<div style="padding:0 5vw 40px;">
-  <div class="sec-head" style="margin-top:40px;">
-    <span class="sec-label">Live Market Overview</span>
-    <div class="sec-line"></div>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:48px;" id="marketCards"></div>
+<div style="padding:0 5vw 40px">
+  <div class="sec-head" style="margin-top:36px"><span class="sec-label">Live Market Overview</span><div class="sec-line"></div></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:44px" id="mktCards"></div>
 </div>
-
 <div class="layout">
   <div>
-    <div class="sec-head">
-      <span class="sec-label">Markets News</span>
-      <div class="sec-line"></div>
-    </div>
+    <div class="sec-head"><span class="sec-label">Markets News</span><div class="sec-line"></div></div>
     <div id="newsGrid"></div>
   </div>
   <aside class="sidebar">
-    <div class="widget">
-      <div class="widget-title">📊 Detailed Markets</div>
-      <div id="marketWidget"></div>
-    </div>
-    <div class="widget">
-      <div class="widget-title">📂 Other Sections</div>
-      <div class="section-links">
-        <a href="geopolitics.html">🌍 Geopolitics <span>→</span></a>
-        <a href="world-politics.html">🏛️ World Politics <span>→</span></a>
-        <a href="technology.html">💻 Technology <span>→</span></a>
-        <a href="index.html">🌐 Home <span>→</span></a>
-      </div>
-    </div>
+    <div class="widget widget-glass"><div class="widget-title">📊 Detailed Markets</div><div id="marketWidget"></div></div>
+    <div class="widget"><div class="widget-title">💱 Currency Converter</div><div id="converterWidget"></div></div>
+    <div class="widget"><div class="widget-title">📂 Other Sections</div><div class="sec-links"><a href="geopolitics.html" class="sec-link">🌍 Geopolitics <span>→</span></a><a href="world-politics.html" class="sec-link">🏛️ World Politics <span>→</span></a><a href="technology.html" class="sec-link">💻 Technology <span>→</span></a></div></div>
   </aside>
 </div>
-
-<div id="footerContainer"></div>
-<div id="pwdModalContainer"></div>
-<div id="editorModalContainer"></div>
-<div id="toastContainer"></div>
-
+<div id="ft"></div><div id="pw"></div><div id="ed"></div><div id="to"></div><div id="bt"></div>
 <script src="app.js"></script>
 <script>
-  document.getElementById('navContainer').innerHTML = buildNavHTML('markets');
-  document.getElementById('tickerContainer').innerHTML = buildTickerHTML();
-  document.getElementById('footerContainer').innerHTML = buildFooterHTML();
-  document.getElementById('pwdModalContainer').innerHTML = buildPasswordModalHTML();
-  document.getElementById('editorModalContainer').innerHTML = buildEditorModalHTML();
-  document.getElementById('toastContainer').innerHTML = buildToastHTML();
-  initPage('markets');
-
-  // Build market cards
-  var fullMarkets = [
-    { name:'S&P 500', val:'5,480.32', chg:'+0.62%', up:true, sub:'US Stocks' },
-    { name:'NASDAQ', val:'17,890.11', chg:'+0.88%', up:true, sub:'US Tech' },
-    { name:'DOW JONES', val:'42,311.50', chg:'-0.14%', up:false, sub:'US Blue Chip' },
-    { name:'NIFTY 50', val:'23,412', chg:'+0.45%', up:true, sub:'India' },
-    { name:'SENSEX', val:'77,102', chg:'+0.38%', up:true, sub:'India' },
-    { name:'Gold /oz', val:'$3,124', chg:'+1.2%', up:true, sub:'Commodity' },
-    { name:'Crude WTI', val:'$74.30', chg:'-0.8%', up:false, sub:'Oil' },
-    { name:'Bitcoin', val:'$87,440', chg:'+2.1%', up:true, sub:'Crypto' },
-    { name:'Ethereum', val:'$3,210', chg:'+1.4%', up:true, sub:'Crypto' },
-    { name:'Silver /oz', val:'$32.80', chg:'+0.9%', up:true, sub:'Commodity' },
-    { name:'USD/INR', val:'₹83.42', chg:'+0.1%', up:false, sub:'Currency' },
-    { name:'EUR/USD', val:'1.0831', chg:'-0.3%', up:false, sub:'Currency' },
-  ];
-
-  document.getElementById('marketCards').innerHTML = fullMarkets.map(function(m) {
-    return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;border-top:3px solid ' + (m.up ? 'var(--green)' : 'var(--red)') + ';">' +
-      '<div style="font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">' + m.sub + '</div>' +
-      '<div style="font-size:0.84rem;font-weight:600;color:var(--text);margin-bottom:7px;">' + m.name + '</div>' +
-      '<div style="font-family:\'DM Mono\',monospace;font-size:1.05rem;font-weight:700;color:var(--text);">' + m.val + '</div>' +
-      '<div style="font-family:\'DM Mono\',monospace;font-size:0.76rem;color:' + (m.up ? 'var(--green)' : 'var(--red)') + ';margin-top:4px;">' + (m.up ? '▲' : '▼') + ' ' + m.chg + '</div>' +
-    '</div>';
-  }).join('');
-
-  async function load() {
-    showSkeletonCards('newsGrid', 6);
-    var articles = await fetchNews('markets');
-    renderNewsCards(articles, 'markets', 'newsGrid');
-  }
-  load();
+document.getElementById('pb').innerHTML=progressHTML();document.getElementById('nv').innerHTML=navHTML('markets');document.getElementById('al').innerHTML=alertHTML();document.getElementById('tk').innerHTML=tickerHTML();document.getElementById('ck').innerHTML=clockHTML();document.getElementById('ft').innerHTML=footerHTML();document.getElementById('pw').innerHTML=pwdModalHTML();document.getElementById('ed').innerHTML=editorModalHTML();document.getElementById('to').innerHTML=toastHTML();document.getElementById('bt').innerHTML=backTopHTML();initPage('markets');
+var FM=[{n:'S&P 500',v:'5,480.32',c:'+0.62%',u:true,s:'US Stocks'},{n:'NASDAQ',v:'17,890',c:'+0.88%',u:true,s:'US Tech'},{n:'DOW',v:'42,311',c:'-0.14%',u:false,s:'Blue Chip'},{n:'NIFTY 50',v:'23,412',c:'+0.45%',u:true,s:'India'},{n:'SENSEX',v:'77,102',c:'+0.38%',u:true,s:'India'},{n:'Gold',v:'$3,124',c:'+1.2%',u:true,s:'Commodity'},{n:'Crude WTI',v:'$74.30',c:'-0.8%',u:false,s:'Oil'},{n:'Bitcoin',v:'$87,440',c:'+2.1%',u:true,s:'Crypto'},{n:'Ethereum',v:'$3,210',c:'+1.4%',u:true,s:'Crypto'},{n:'Silver',v:'$32.80',c:'+0.9%',u:true,s:'Commodity'},{n:'USD/INR',v:'₹83.42',c:'+0.1%',u:false,s:'Currency'},{n:'EUR/USD',v:'1.0831',c:'-0.3%',u:false,s:'Currency'}];
+document.getElementById('mktCards').innerHTML=FM.map(function(m){return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:16px;border-top:3px solid '+(m.u?'var(--green)':'var(--red)')+'"><div style="font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">'+m.s+'</div><div style="font-size:0.83rem;font-weight:700;color:var(--text);margin-bottom:7px">'+m.n+'</div><div style="font-family:\'DM Mono\',monospace;font-size:1.05rem;font-weight:700;color:var(--text)">'+m.v+'</div><div style="font-family:\'DM Mono\',monospace;font-size:0.74rem;color:'+(m.u?'var(--green)':'var(--red)')+';margin-top:4px">'+(m.u?'▲':'▼')+' '+m.c+'</div></div>';}).join('');
+async function load(){showSkeleton('newsGrid',6);var a=await fetchNews('markets');renderCards(a,'markets','newsGrid');}load();
 </script>
-</body>
-</html>
+</body></html>
